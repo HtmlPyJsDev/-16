@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Супер 8D CS 1.6 Сервер</title>
+    <style>
+        @keyframes neonPulse {
+            0%, 100% { text-shadow: 0 0 10px #ff00de, 0 0 20px #ff00de, 0 0 30px #ff00de, 0 0 40px #ff00de, 0 0 70px #ff00de; }
+            50% { text-shadow: 0 0 20px #00ffff, 0 0 30px #00ffff, 0 0 40px #00ffff, 0 0 50px #00ffff, 0 0 80px #00ffff; }
+        }
+        @keyframes backgroundShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        @keyframes rotate3D {
+            0% { transform: perspective(1000px) rotateX(0deg) rotateY(0deg); }
+            50% { transform: perspective(1000px) rotateX(15deg) rotateY(15deg); }
+            100% { transform: perspective(1000px) rotateX(0deg) rotateY(0deg); }
+        }
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Orbitron', sans-serif;
+            background: linear-gradient(45deg, #000000, #1a0030, #000050, #1a0030, #000000);
+            background-size: 400% 400%;
+            animation: backgroundShift 15s ease infinite;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        header {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        nav a {
+            color: #00ffff;
+            text-decoration: none;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 10px #00ffff;
+        }
+        nav a:hover {
+            color: #ff00de;
+            text-shadow: 0 0 20px #ff00de;
+            transform: scale(1.1);
+        }
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: url('https://placekitten.com/1920/1080') no-repeat center center;
+            background-size: cover;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            animation: float 6s ease-in-out infinite;
+        }
+        h1, h2 {
+            animation: neonPulse 2s infinite;
+        }
+        .button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(45deg, #ff00de, #00ffff);
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 5px #ffffff;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .button:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 0 20px #ff00de, 0 0 40px #00ffff;
+        }
+        .server-info {
+            padding: 100px 0;
+            text-align: center;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        .info-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            animation: rotate3D 5s infinite;
+        }
+        .info-item:hover {
+            transform: scale(1.05) translateY(-10px);
+            box-shadow: 0 10px 20px rgba(255, 0, 222, 0.3);
+        }
+        .features {
+            padding: 100px 0;
+            background: linear-gradient(45deg, #000000, #1a0030);
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        .feature-item {
+            background: rgba(0, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .feature-item:hover {
+            transform: scale(1.05) rotate(3deg);
+            box-shadow: 0 0 30px #00ffff;
+        }
+        .admin-panel, .donation-shop {
+            padding: 100px 0;
+            text-align: center;
+        }
+        .shop-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        .shop-item {
+            background: rgba(255, 0, 222, 0.1);
+            padding: 30px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+        .shop-item:hover {
+            transform: scale(1.05) translateY(-10px) rotate(-3deg);
+            box-shadow: 0 10px 30px rgba(255, 0, 222, 0.5);
+        }
+        footer {
+            background: #000000;
+            color: #ffffff;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 100px;
+        }
+        .glow-text {
+            text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 30px #00ffff;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="#home">Главная</a>
+            <a href="#server-info">Инфо</a>
+            <a href="#features">Особенности</a>
+            <a href="#admin">Админка</a>
+            <a href="#donators">Донатеры</a>
+            <a href="#shop">Магазин</a>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Супер 8D CS 1.6 Сервер</h1>
+            <p class="glow-text">Испытайте классический шутер в новом измерении!</p>
+            <a href="#server-info" class="button">Присоединиться</a>
+        </div>
+    </section>
+
+    <section id="server-info" class="server-info">
+        <div class="container">
+            <h2>Информация о сервере</h2>
+            <div class="info-grid">
+                <div class="info-item">
+                    <h3>IP Сервера</h3>
+                    <p class="glow-text">95.181.158.132:27040</p>
+                </div>
+                <div class="info-item">
+                    <h3>Игроки</h3>
+                    <p class="glow-text">24/32</p>
+                </div>
+                <div class="info-item">
+                    <h3>Текущая карта</h3>
+                    <p class="glow-text">de_dust2</p>
+                </div>
+                <div class="info-item">
+                    <h3>Статус</h3>
+                    <p class="glow-text">Онлайн</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="features">
+        <div class="container">
+            <h2>Особенности сервера</h2>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <h3>Анти-чит</h3>
+                    <p>Продвинутая система защиты от читеров</p>
+                </div>
+                <div class="feature-item">
+                    <h3>Активное сообщество</h3>
+                    <p>Присоединяйтесь к дружелюбным игрокам</p>
+                </div>
+                <div class="feature-item">
+                    <h3>Низкий пинг</h3>
+                    <p>Мощные сервера для плавного геймплея</p>
+                </div>
+                <div class="feature-item">
+                    <h3>Регулярные ивенты</h3>
+                    <p>Участвуйте в турнирах и специальных режимах</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="admin" class="admin-panel">
+        <div class="container">
+            <h2>Админ панель</h2>
+            <p>Управляйте настройками сервера и игроками</p>
+            <a href="#" class="button">Войти в админку</a>
+            <a href="#" class="button">Создать группы</a>
+        </div>
+    </section>
+
+    <section id="donators" class="server-info">
+        <div class="container">
+            <h2>Топ донатеров</h2>
+            <div class="info-grid">
+                <div class="info-item">
+                    <h3>Player1</h3>
+                    <p class="glow-text">$100</p>
+                </div>
+                <div class="info-item">
+                    <h3>Player2</h3>
+                    <p class="glow-text">$75</p>
+                </div>
+                <div class="info-item">
+                    <h3>Player3</h3>
+                    <p class="glow-text">$50</p>
+                </div>
+                <div class="info-item">
+                    <h3>Player4</h3>
+                    <p class="glow-text">$25</p>
+                </div>
+                <div class="info-item">
+                    <h3>Player5</h3>
+                    <p class="glow-text">$10</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="shop" class="donation-shop">
+        <div class="container">
+            <h2>Магазин доната</h2>
+            <div class="shop-grid">
+                <div class="shop-item">
+                    <h3>VIP статус</h3>
+                    <p>Доступ к эксклюзивным функциям</p>
+                    <p class="glow-text">$10</p>
+                    <a href="#" class="button">Купить</a>
+                </div>
+                <div class="shop-item">
+                    <h3>Уникальный скин</h3>
+                    <p>Выделись среди других игроков</p>
+                    <p class="glow-text">$5</p>
+                    <a href="#" class="button">Купить</a>
+                </div>
+                <div class="shop-item">
+                    <h3>Спец-оружие</h3>
+                    <p>Разблокируй мощное оружие</p>
+                    <p class="glow-text">$15</p>
+                    <a href="#" class="button">Купить</a>
+                </div>
+                <div class="shop-item">
+                    <h3>Сила голоса</h3>
+                    <p>Твой голос при выборе карты учитывается дважды</p>
+                    <p class="glow-text">$8</p>
+                    <a href="#" class="button">Купить</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2023 Супер 8D CS 1.6 Сервер. Все права защищены.</p>
+    </footer>
+</body>
+</html>
